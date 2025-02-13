@@ -1,45 +1,4 @@
 {
-  "expo": {
-    "name": "银发伴侣",
-    "slug": "silver-companion",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "silvercompanion",
-    "owner": "silvercompanion",
-    "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.silvercompanion.app",
-      "buildNumber": "1"
-    },
-    "android": {
-      "package": "com.silvercompanion.app",
-      "versionCode": 1,
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "permissions": [
-        "CAMERA",
-        "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE",
-        "ACCESS_COARSE_LOCATION",
-        "ACCESS_FINE_LOCATION"
-      ]
-    },
-    "extra": {
-      "eas": {
-        "projectId": "silver-companion"
-      }
-    }
-  }
+  "name": "silver-companion",
+  "displayName": "Silver Companion"
 }
