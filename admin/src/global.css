@@ -1,0 +1,170 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Layout */
+.ant-layout {
+  min-height: 100vh !important;
+}
+
+.ant-layout-sider {
+  box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
+}
+
+.ant-layout-header {
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+}
+
+.ant-layout-content {
+  margin: 24px !important;
+  padding: 24px;
+  background: #fff;
+  min-height: calc(100vh - 112px);
+}
+
+/* Menu */
+.ant-menu-inline .ant-menu-item,
+.ant-menu-inline .ant-menu-submenu-title {
+  width: 100%;
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
+}
+
+.ant-menu-inline .ant-menu-item::after {
+  border-right: 3px solid #1890ff;
+}
+
+/* Card */
+.ant-card {
+  box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16),
+              0 3px 6px 0 rgba(0, 0, 0, 0.12),
+              0 5px 12px 4px rgba(0, 0, 0, 0.09);
+  border-radius: 8px;
+}
+
+/* Form */
+.ant-form-item-label > label {
+  font-weight: 500;
+}
+
+.ant-input,
+.ant-input-password {
+  border-radius: 4px;
+}
+
+.ant-input:hover,
+.ant-input-password:hover {
+  border-color: #1890ff;
+}
+
+.ant-input:focus,
+.ant-input-password:focus {
+  border-color: #1890ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+/* Button */
+.ant-btn {
+  border-radius: 4px;
+  height: 40px;
+  font-weight: 500;
+}
+
+.ant-btn-primary {
+  background: #1890ff;
+  border-color: #1890ff;
+  box-shadow: 0 2px 0 rgba(24, 144, 255, 0.1);
+}
+
+.ant-btn-primary:hover {
+  background: #40a9ff;
+  border-color: #40a9ff;
+}
+
+/* Table */
+.ant-table-wrapper {
+  background: #fff;
+  border-radius: 8px;
+}
+
+.ant-table-thead > tr > th {
+  background: #fafafa;
+  font-weight: 500;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ant-layout-content {
+    margin: 12px !important;
+    padding: 12px;
+  }
+  
+  .ant-card {
+    border-radius: 4px;
+  }
+  
+  .ant-table {
+    font-size: 14px;
+  }
+}
+
+/* Login Page */
+.login-layout {
+  min-height: 100vh;
+  background: #f0f2f5;
+}
+
+.login-content {
+  padding: 32px 0;
+}
+
+.login-card {
+  margin: 0 auto;
+  max-width: 400px;
+  border-radius: 8px;
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.login-form-button {
+  width: 100%;
+}

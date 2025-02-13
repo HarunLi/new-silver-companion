@@ -1,0 +1,45 @@
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f2f5;
+  background-image: linear-gradient(to right bottom, #50a3a2 0%, #53e3a6 100%);
+}
+
+.card {
+  width: 400px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  :global {
+    .ant-card-head {
+      text-align: center;
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .ant-card-head-title {
+      font-size: 24px;
+      font-weight: bold;
+      padding: 24px 0;
+    }
+
+    .ant-card-body {
+      padding: 24px 36px;
+    }
+
+    .ant-form-item {
+      margin-bottom: 24px;
+    }
+
+    .ant-input-affix-wrapper {
+      border-radius: 4px;
+    }
+
+    .ant-btn {
+      height: 40px;
+      border-radius: 4px;
+    }
+  }
+}
