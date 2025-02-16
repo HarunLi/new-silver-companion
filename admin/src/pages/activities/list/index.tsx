@@ -24,19 +24,18 @@ const ActivityList: React.FC = () => {
   const [form] = Form.useForm();
   const [editingId, setEditingId] = useState<number | null>(null);
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await activityService.getActivities();
-      setData(response);
-    } catch (error) {
-      message.error('获取活动列表失败');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await activityService.getActivities();
+        setData(response.data);
+      } catch (error) {
+        console.error('Failed to fetch activities:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchData();
   }, []);
 
@@ -150,6 +149,18 @@ const ActivityList: React.FC = () => {
       ),
     },
   ];
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await activityService.getActivities();
+      setData(response.data);
+    } catch (error) {
+      console.error('Failed to fetch activities:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Card title="活动管理">

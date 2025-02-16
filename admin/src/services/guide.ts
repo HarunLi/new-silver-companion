@@ -1,4 +1,4 @@
-import { request } from '@/utils/request';
+import request from '@/utils/request';
 import type { Guide, CreateGuideRequest, UpdateGuideRequest } from '@/types/guide';
 
 const BASE_URL = '/api/v1/guides';

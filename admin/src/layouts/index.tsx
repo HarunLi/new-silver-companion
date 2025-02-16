@@ -3,18 +3,18 @@ import { Layout, Menu, Dropdown, Space, Avatar } from 'antd';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import {
   HomeOutlined,
-  HeartOutlined,
-  FileTextOutlined,
-  SmileOutlined,
-  CalendarOutlined,
   UserOutlined,
+  HeartOutlined,
+  SmileOutlined,
+  BarsOutlined,
+  CalendarOutlined,
   LogoutOutlined,
   BookOutlined,
 } from '@ant-design/icons';
 
 const { Header, Content, Sider } = Layout;
 
-const menuItems = [
+const menuItems: MenuProps['items'] = [
   {
     key: 'pets',
     icon: <SmileOutlined />,
@@ -47,7 +47,7 @@ const menuItems = [
   },
 ];
 
-const userMenuItems = [
+const userMenuItems: MenuProps['items'] = [
   {
     key: 'profile',
     icon: <UserOutlined />,

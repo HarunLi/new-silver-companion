@@ -1,25 +1,15 @@
-import { Theme } from '@rneui/themed';
+import { Theme } from '@react-navigation/native';
 
 export const theme: Theme = {
-  lightColors: {
+  dark: false,
+  colors: {
     primary: '#4A90E2',    // 柔和的蓝色，易于识别
-    secondary: '#2ECC71',  // 舒适的绿色
     background: '#F5F5F5', // 浅灰色背景，减少眩光
-    white: '#FFFFFF',
-    black: '#000000',
-    grey0: '#393E42',
-    grey1: '#43484D',
-    grey2: '#5E6977',
-    grey3: '#86939E',
-    grey4: '#BDC6CF',
-    grey5: '#E1E8EE',
-    greyOutline: '#BBC0C4',
-    success: '#2ECC71',    // 成功状态绿色
-    error: '#E74C3C',      // 错误状态红色
-    warning: '#F1C40F',    // 警告状态黄色
-    disabled: '#BDC6CF',   // 禁用状态灰色
+    card: '#FFFFFF',
+    text: '#000000',
+    border: '#E5E5E5',
+    notification: '#FF3B30',
   },
-  mode: 'light',           // 默认使用浅色主题
   spacing: {
     xs: 8,
     sm: 16,
@@ -119,3 +109,5 @@ export const theme: Theme = {
     },
   },
 };
+
+export default theme;

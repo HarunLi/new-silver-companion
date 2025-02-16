@@ -33,19 +33,18 @@ const ActivitiesPage: React.FC = () => {
   const [form] = Form.useForm();
   const [editingId, setEditingId] = useState<number | null>(null);
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await activityService.getActivities();
-      setData(response);
-    } catch (error) {
-      message.error('获取活动列表失败');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await activityService.getActivities();
+        setData(response.data); // 使用 response.data 而不是整个响应对象
+      } catch (error) {
+        message.error('获取活动列表失败');
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchData();
   }, []);
 

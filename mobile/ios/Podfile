@@ -1,70 +1,36 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-# 强制指定 boost 版本
-$RNBoostVersion = '1.76.0'
+# 确保正确加载 React Native 的配置脚本
+require Pod::Executable.execute_command('node', ['-p',
+  'require.resolve(
+    "react-native/scripts/react_native_pods.rb",
+    {paths: [process.argv[1]]},
+  )', __dir__]).strip
 
-platform :ios, '12.4'
+platform :ios, min_ios_version_supported
 prepare_react_native_project!
 
-# 添加 boost 的特殊处理
-def pod_fix_boost
-  pre_install do |installer|
-    installer.pod_targets.each do |pod|
-      if pod.name.eql?('boost')
-        def pod.build_type
-          Pod::BuildType.static_library
-        end
-      end
-      if pod.name.eql?('RCT-Folly')
-        pod.specs.each do |spec|
-          spec.dependencies['boost'] = $RNBoostVersion
-        end
-      end
-    end
-  end
-end
+# 禁用 Flipper
+ENV['NO_FLIPPER'] = "1"
+flipper_config = FlipperConfiguration.disabled
 
-pod_fix_boost
-
-# If you are using a `react-native-flipper` your iOS build will fail when `NO_FLIPPER=1` is set.
-# because `react-native-flipper` depends on (FlipperKit,...) that will be excluded
-#
-# To fix this you can also exclude `react-native-flipper` using a `react-native.config.js`
-# ```js
-# module.exports = {
-#   dependencies: {
-#     ...(process.env.NO_FLIPPER ? { 'react-native-flipper': { platforms: { ios: null } } } : {}),
-# ```
-flipper_config = ENV['NO_FLIPPER'] == "1" ? FlipperConfiguration.disabled : FlipperConfiguration.enabled
-
-linkage = ENV['USE_FRAMEWORKS']
-if linkage != nil
-  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
-  use_frameworks! :linkage => linkage.to_sym
-end
+# 配置 pod 源
+source 'https://cdn.cocoapods.org/'
 
 target 'app' do
   config = use_native_modules!
-
-  # Flags change depending on the env values.
   flags = get_default_flags()
 
   use_react_native!(
     :path => config[:reactNativePath],
     :hermes_enabled => flags[:hermes_enabled],
     :fabric_enabled => flags[:fabric_enabled],
-    # Enables Flipper.
-    #
-    # Note that if you have use_frameworks! enabled, Flipper will not work and
-    # you should disable the next line.
     :flipper_configuration => flipper_config,
-    # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
   post_install do |installer|
-    # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
     react_native_post_install(
       installer,
       config[:reactNativePath],
@@ -72,15 +38,10 @@ target 'app' do
     )
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
 
-    # 添加额外的 pod 配置
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.4'
-        # 添加额外的编译设置
-        if target.name == 'boost'
-          config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++14'
-          config.build_settings['CLANG_CXX_LIBRARY'] = 'libc++'
-        end
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+        config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)', '_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION']
       end
     end
   end

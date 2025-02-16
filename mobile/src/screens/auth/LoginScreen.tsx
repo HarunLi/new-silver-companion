@@ -7,6 +7,7 @@ import { RootStackParamList } from '../../navigation/types';
 import PhoneInput from '../../components/auth/PhoneInput';
 import VerificationCodeInput from '../../components/auth/VerificationCodeInput';
 import { useAuthStore } from '../../store/useAuthStore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
@@ -76,20 +77,26 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   const handleLogin = async () => {
-    if (!validatePhone() || !validateCode() || !validateNickname()) {
-      return;
-    }
-
     try {
-      await login(phone, code, showNickname ? nickname : undefined);
-      navigation.replace('Main');
-    } catch (error: any) {
-      if (error?.detail === 'User not found') {
-        setShowNickname(true);
-      } else {
-        Alert.alert('错误', error?.detail || '登录失败，请重试');
+      const response = await login(phone, code, showNickname ? nickname : undefined);
+      if (response.status === 200) {
+        // 保存 token
+        await AsyncStorage.setItem('token', response.data.token);
+        // 导航到主页
+        navigation.replace('MainTab' as keyof RootStackParamList);
       }
+    } catch (error) {
+      console.error('Login failed:', error);
+      Alert.alert('登录失败', '请检查用户名和密码');
     }
+  };
+
+  const validateUsername = (state: string): boolean => {
+    return state.length >= 3;
+  };
+
+  const validatePassword = (state: string): boolean => {
+    return state.length >= 6;
   };
 
   return (

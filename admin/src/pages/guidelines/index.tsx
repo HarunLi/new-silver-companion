@@ -31,19 +31,18 @@ const GuidelinesPage: React.FC = () => {
   const [form] = Form.useForm();
   const [editingId, setEditingId] = useState<number | null>(null);
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await guidelineService.getGuidelines();
-      setData(response);
-    } catch (error) {
-      message.error('获取指南列表失败');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await guidelineService.getGuidelines();
+        setData(response.data);
+      } catch (error) {
+        message.error('获取指南列表失败');
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchData();
   }, []);
 

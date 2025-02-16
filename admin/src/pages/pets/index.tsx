@@ -41,19 +41,18 @@ const PetsPage: React.FC = () => {
   const [form] = Form.useForm();
   const [editingId, setEditingId] = useState<number | null>(null);
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await petService.getPets();
-      setData(response);
-    } catch (error) {
-      message.error('获取宠物列表失败');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await petService.getPets();
+        setData(response.data);
+      } catch (error) {
+        message.error('获取宠物列表失败');
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchData();
   }, []);
 
@@ -179,6 +178,18 @@ const PetsPage: React.FC = () => {
       ),
     },
   ];
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await petService.getPets();
+      setData(response.data);
+    } catch (error) {
+      message.error('获取宠物列表失败');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Card title="宠物管理">

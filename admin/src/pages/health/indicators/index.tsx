@@ -6,16 +6,12 @@ import {
   Modal,
   Form,
   Input,
-  Select,
   message,
-  Space,
-  InputNumber,
 } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { healthIndicatorService } from '@/services/healthIndicator';
 
 const { TextArea } = Input;
-const { Option } = Select;
 
 interface HealthIndicatorFormData {
   name: string;
@@ -33,19 +29,18 @@ const HealthIndicatorsPage: React.FC = () => {
   const [form] = Form.useForm();
   const [editingId, setEditingId] = useState<number | null>(null);
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await healthIndicatorService.getHealthIndicators();
-      setData(response);
-    } catch (error) {
-      message.error('获取健康指标列表失败');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await healthIndicatorService.getHealthIndicators();
+        setData(response.data);
+      } catch (error) {
+        message.error('获取健康指标列表失败');
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchData();
   }, []);
 
@@ -65,7 +60,8 @@ const HealthIndicatorsPage: React.FC = () => {
     try {
       await healthIndicatorService.deleteHealthIndicator(id);
       message.success('删除成功');
-      fetchData();
+      const response = await healthIndicatorService.getHealthIndicators();
+      setData(response.data);
     } catch (error) {
       message.error('删除失败');
     }
@@ -81,7 +77,8 @@ const HealthIndicatorsPage: React.FC = () => {
         message.success('创建成功');
       }
       setModalVisible(false);
-      fetchData();
+      const response = await healthIndicatorService.getHealthIndicators();
+      setData(response.data);
     } catch (error) {
       message.error(editingId ? '更新失败' : '创建失败');
     }
@@ -118,14 +115,11 @@ const HealthIndicatorsPage: React.FC = () => {
       key: 'status',
       width: 100,
       render: (status: string) => (
-        <Select
+        <Input
           value={status}
           style={{ width: 100 }}
           disabled
-        >
-          <Option value="active">启用</Option>
-          <Option value="inactive">停用</Option>
-        </Select>
+        />
       ),
     },
     {
@@ -133,23 +127,13 @@ const HealthIndicatorsPage: React.FC = () => {
       key: 'action',
       width: 200,
       render: (record: any) => (
-        <Space>
-          <Button
-            type="link"
-            icon={<EditOutlined />}
-            onClick={() => handleEdit(record)}
-          >
-            编辑
-          </Button>
-          <Button
-            type="link"
-            danger
-            icon={<DeleteOutlined />}
-            onClick={() => handleDelete(record.id)}
-          >
-            删除
-          </Button>
-        </Space>
+        <Button
+          type="link"
+          icon={<EditOutlined />}
+          onClick={() => handleEdit(record)}
+        >
+          编辑
+        </Button>
       ),
     },
   ];
@@ -202,12 +186,7 @@ const HealthIndicatorsPage: React.FC = () => {
             label="类型"
             rules={[{ required: true, message: '请选择类型' }]}
           >
-            <Select placeholder="请选择类型">
-              <Option value="vital">生命体征</Option>
-              <Option value="blood">血液指标</Option>
-              <Option value="body">身体指标</Option>
-              <Option value="other">其他</Option>
-            </Select>
+            <Input placeholder="请选择类型" />
           </Form.Item>
 
           <Form.Item
@@ -239,19 +218,14 @@ const HealthIndicatorsPage: React.FC = () => {
             label="状态"
             rules={[{ required: true, message: '请选择状态' }]}
           >
-            <Select placeholder="请选择状态">
-              <Option value="active">启用</Option>
-              <Option value="inactive">停用</Option>
-            </Select>
+            <Input placeholder="请选择状态" />
           </Form.Item>
 
           <Form.Item>
-            <Space style={{ width: '100%', justifyContent: 'flex-end' }}>
-              <Button onClick={() => setModalVisible(false)}>取消</Button>
-              <Button type="primary" htmlType="submit">
-                确定
-              </Button>
-            </Space>
+            <Button onClick={() => setModalVisible(false)}>取消</Button>
+            <Button type="primary" htmlType="submit">
+              确定
+            </Button>
           </Form.Item>
         </Form>
       </Modal>
